@@ -10,6 +10,10 @@ import javax.swing.JFrame;
 
 public class CaveQuest extends Canvas implements Runnable {
 
+	private static CaveQuest instance;
+	
+	private GameMode gameMode;
+	
 	private MenuRenderEngine menuRenderer;
 	private GameRenderEngine gameRenderer;
 	private static final long serialVersionUID = 1L;
@@ -85,23 +89,28 @@ public class CaveQuest extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		// TODO: RenderEngine Class to render
+		
+		switch (gameMode) {
+		
+		}
+		
 		g.dispose();
 		bs.show();
 
 	}
 
 	public static void main(String[] args) {
-		CaveQuest game = new CaveQuest();
-		game.frame.setResizable(false);
-		game.frame.setTitle(title);
-		game.frame.add(game);
-		game.frame.pack();
-		game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		game.frame.setLocationRelativeTo(null);
-		game.frame.setVisible(true);
+		instance = new CaveQuest();
+		
+		instance.frame.setResizable(false);
+		instance.frame.setTitle(title);
+		instance.frame.add(instance);
+		instance.frame.pack();
+		instance.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		instance.frame.setLocationRelativeTo(null);
+		instance.frame.setVisible(true);
 
-		game.start();
+		instance.start();
 	}
 
 }
