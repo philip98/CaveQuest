@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 import javax.swing.JFrame;
 
@@ -28,22 +31,24 @@ public class CaveQuest extends Canvas implements Runnable {
 	private Thread thread;
 	private JFrame frame;
 	private boolean running = false;
-	
+
 	private InputListener inputListener;
 	private GameMode gameMode;
 	private MenuRenderEngine menuRenderer;
 	private GameRenderEngine gameRenderer;
+
+	private Socket serverConnected;
 
 	public CaveQuest() {
 		Dimension size = new Dimension(width, height);
 		setPreferredSize(size);
 
 		frame = new JFrame();
-		setInputListener(new InputListener());
+		inputListener = new InputListener();
 		gameMode = GameMode.MENU;
 		menuRenderer = new MenuRenderEngine();
 		gameRenderer = new GameRenderEngine();
-		
+
 		Logger.log("Initalized variables");
 	}
 
@@ -107,18 +112,18 @@ public class CaveQuest extends Canvas implements Runnable {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		switch (gameMode) {
-		case MENU:
-			menuRenderer.render(g);
-			break;
-		case INGAME:
-			gameRenderer.render(g);
-			break;
+			case MENU:
+				menuRenderer.render(g);
+				break;
+			case INGAME:
+				gameRenderer.render(g);
+				break;
 		}
-		
+
 		g.dispose();
 		bs.show();
 	}
-	
+
 	public static CaveQuest getInstance() {
 		return instance;
 	}
@@ -154,14 +159,20 @@ public class CaveQuest extends Canvas implements Runnable {
 		instance.frame.setVisible(true);
 		instance.addKeyListener(instance.inputListener);
 		instance.addMouseListener(instance.inputListener);
-		
+
 		Logger.log("Created window");
-		
+
 		instance.start();
 	}
 
 	public void connect(String ip) {
-		Logger.log("Connecting to " + ip);		
+		Logger.log("Connecting to " + ip);
+		try {
+			serverConnected = new Socket(ip, Server.DEFAULT_PORT);
+			Logger.log("Connected!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public JFrame getFrame() {
@@ -202,5 +213,13 @@ public class CaveQuest extends Canvas implements Runnable {
 
 	public void setInputListener(InputListener inputListener) {
 		this.inputListener = inputListener;
+	}
+
+	public Socket getServerConnected() {
+		return serverConnected;
+	}
+
+	public void setServerConnected(Socket serverConnected) {
+		this.serverConnected = serverConnected;
 	}
 }
