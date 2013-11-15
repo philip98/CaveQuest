@@ -9,24 +9,24 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 
 public class CaveQuest extends Canvas implements Runnable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	public static String title = "CaveQuest";
 	public static int width = 900;
 	public static int height = 600;
-
+	
 	private Thread thread;
 	private JFrame frame;
 	private boolean running = false;
-	
+
 	public CaveQuest() {
 		Dimension size = new Dimension(width, height);
 		setPreferredSize(size);
-
+		
 		frame = new JFrame();
 	}
-	
+
 	public synchronized void start() {
 		running = true;
 		thread = new Thread(this, "CaveQuest");
@@ -43,14 +43,34 @@ public class CaveQuest extends Canvas implements Runnable {
 	}
 
 	public void run() {
+		long lastTime = System.nanoTime();
+		long timer = System.currentTimeMillis();
+		final double ns = 1000000000.0 / 60.0;
+		double delta = 0;
+		int frames = 0;
+		int updates = 0;
 		while (running) {
-			update();
+			long now = System.nanoTime();
+			delta += (now - lastTime) / ns;
+			lastTime = now;
+			while(delta >= 1) {
+				update();
+				updates++;
+				delta--;
+			}
 			render();
+			frames++;
+			if(System.currentTimeMillis() - timer > 1000) {
+				timer += 1000;
+				frame.setTitle(title + " | " + updates + " ups, " + frames + " fps");
+				updates = 0;
+				frames = 0;
+			}
 		}
 	}
 
 	public void update() {
-		
+
 	}
 
 	public void render() {
@@ -59,14 +79,14 @@ public class CaveQuest extends Canvas implements Runnable {
 			createBufferStrategy(3);
 			return;
 		}
-		
+
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		// TODO: RenderEngine Class to render
 		g.dispose();
 		bs.show();
-		
+
 	}
 
 	public static void main(String[] args) {
@@ -81,5 +101,5 @@ public class CaveQuest extends Canvas implements Runnable {
 
 		game.start();
 	}
-	
+
 }
