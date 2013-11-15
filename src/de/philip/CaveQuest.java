@@ -11,25 +11,25 @@ import javax.swing.JFrame;
 public class CaveQuest extends Canvas implements Runnable {
 
 	private static CaveQuest instance;
-	
-	private GameMode gameMode;
-	
-	private MenuRenderEngine menuRenderer;
-	private GameRenderEngine gameRenderer;
+
 	private static final long serialVersionUID = 1L;
 
 	public static String title = "CaveQuest";
 	public static int width = 900;
 	public static int height = 600;
-	
+
 	private Thread thread;
 	private JFrame frame;
 	private boolean running = false;
 
+	private GameMode gameMode;
+	private MenuRenderEngine menuRenderer;
+	private GameRenderEngine gameRenderer;
+
 	public CaveQuest() {
 		Dimension size = new Dimension(width, height);
 		setPreferredSize(size);
-		
+
 		frame = new JFrame();
 	}
 
@@ -59,14 +59,14 @@ public class CaveQuest extends Canvas implements Runnable {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
-			while(delta >= 1) {
+			while (delta >= 1) {
 				update();
 				updates++;
 				delta--;
 			}
 			render();
 			frames++;
-			if(System.currentTimeMillis() - timer > 1000) {
+			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
 				frame.setTitle(title + " | " + updates + " ups, " + frames + " fps");
 				updates = 0;
@@ -89,19 +89,34 @@ public class CaveQuest extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		
-		switch (gameMode) {
-		
-		}
-		
+
 		g.dispose();
 		bs.show();
 
 	}
 
 	public static void main(String[] args) {
+
+		boolean flagServer = false;
+		int port = Server.DEFAULT_PORT;
+
+		for (int i = 0; i < args.length; i++) {
+			if (args[i].equalsIgnoreCase("--server")) {
+				flagServer = true;
+				if (args[i + 1] != null) {
+					port = Integer.parseInt(args[i + 1]);
+				}
+			}
+		}
+
+		if (flagServer) {
+			Server server = new Server(port);
+			server.start();
+			return;
+		}
+
 		instance = new CaveQuest();
-		
+
 		instance.frame.setResizable(false);
 		instance.frame.setTitle(title);
 		instance.frame.add(instance);
