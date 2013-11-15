@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import de.philip.graphics.GameMode;
 import de.philip.graphics.GameRenderEngine;
 import de.philip.graphics.MenuRenderEngine;
+import de.philip.input.InputListener;
 import de.philip.net.server.Server;
 import de.philip.util.Logger;
 
@@ -27,7 +28,8 @@ public class CaveQuest extends Canvas implements Runnable {
 	private Thread thread;
 	private JFrame frame;
 	private boolean running = false;
-
+	
+	private InputListener inputListener;
 	private GameMode gameMode;
 	private MenuRenderEngine menuRenderer;
 	private GameRenderEngine gameRenderer;
@@ -37,8 +39,8 @@ public class CaveQuest extends Canvas implements Runnable {
 		setPreferredSize(size);
 
 		frame = new JFrame();
+		setInputListener(new InputListener());
 		gameMode = GameMode.MENU;
-		
 		menuRenderer = new MenuRenderEngine();
 		gameRenderer = new GameRenderEngine();
 		
@@ -150,9 +152,55 @@ public class CaveQuest extends Canvas implements Runnable {
 		instance.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		instance.frame.setLocationRelativeTo(null);
 		instance.frame.setVisible(true);
+		instance.addKeyListener(instance.inputListener);
+		instance.addMouseListener(instance.inputListener);
 		
 		Logger.log("Created window");
 		
 		instance.start();
+	}
+
+	public void connect(String ip) {
+		Logger.log("Connecting to " + ip);		
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+
+	public GameMode getGameMode() {
+		return gameMode;
+	}
+
+	public void setGameMode(GameMode gameMode) {
+		this.gameMode = gameMode;
+	}
+
+	public MenuRenderEngine getMenuRenderer() {
+		return menuRenderer;
+	}
+
+	public void setMenuRenderer(MenuRenderEngine menuRenderer) {
+		this.menuRenderer = menuRenderer;
+	}
+
+	public GameRenderEngine getGameRenderer() {
+		return gameRenderer;
+	}
+
+	public void setGameRenderer(GameRenderEngine gameRenderer) {
+		this.gameRenderer = gameRenderer;
+	}
+
+	public InputListener getInputListener() {
+		return inputListener;
+	}
+
+	public void setInputListener(InputListener inputListener) {
+		this.inputListener = inputListener;
 	}
 }
