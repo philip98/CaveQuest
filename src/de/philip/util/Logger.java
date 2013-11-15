@@ -1,4 +1,4 @@
-package de.philip;
+package de.philip.util;
 
 import java.util.Calendar;
 

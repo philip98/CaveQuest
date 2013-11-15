@@ -1,4 +1,4 @@
-package de.philip;
+package de.philip.graphics;
 
 import java.awt.Graphics;
 

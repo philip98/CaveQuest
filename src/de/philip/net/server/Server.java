@@ -1,4 +1,6 @@
-package de.philip;
+package de.philip.net.server;
+
+import de.philip.util.Logger;
 
 public class Server {
 	

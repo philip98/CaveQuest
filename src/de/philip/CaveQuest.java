@@ -8,13 +8,14 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
+import de.philip.graphics.GameMode;
+import de.philip.graphics.GameRenderEngine;
+import de.philip.graphics.MenuRenderEngine;
+import de.philip.net.server.Server;
+
 public class CaveQuest extends Canvas implements Runnable {
 
 	private static CaveQuest instance;
-<<<<<<< HEAD
-	
-=======
->>>>>>> branch 'master' of https://github.com/philip98/CaveQuest.git
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,11 +26,6 @@ public class CaveQuest extends Canvas implements Runnable {
 	private Thread thread;
 	private JFrame frame;
 	private boolean running = false;
-	
-	private GameMode gameMode;
-	
-	private MenuRenderEngine menuRenderer;
-	private GameRenderEngine gameRenderer;
 
 	private GameMode gameMode;
 	private MenuRenderEngine menuRenderer;
@@ -99,8 +95,6 @@ public class CaveQuest extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
-<<<<<<< HEAD
-		
 		switch (gameMode) {
 		case MENU:
 			menuRenderer.render();
@@ -110,9 +104,6 @@ public class CaveQuest extends Canvas implements Runnable {
 			break;
 		}
 		
-=======
-
->>>>>>> branch 'master' of https://github.com/philip98/CaveQuest.git
 		g.dispose();
 		bs.show();
 
