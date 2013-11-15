@@ -1,6 +1,5 @@
 package de.philip.input;
 
-import java.awt.Menu;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;

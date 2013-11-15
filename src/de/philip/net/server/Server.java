@@ -24,8 +24,6 @@ public class Server {
 
 	public void start() {
 		Logger.log("Starting Server on port " + port + " ...");
-		
-		
 	}
 
 	public int getPort() {

@@ -5,9 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-import java.io.IOException;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 import javax.swing.JFrame;
 
