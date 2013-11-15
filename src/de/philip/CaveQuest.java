@@ -11,6 +11,10 @@ import javax.swing.JFrame;
 public class CaveQuest extends Canvas implements Runnable {
 
 	private static CaveQuest instance;
+<<<<<<< HEAD
+	
+=======
+>>>>>>> branch 'master' of https://github.com/philip98/CaveQuest.git
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,6 +25,11 @@ public class CaveQuest extends Canvas implements Runnable {
 	private Thread thread;
 	private JFrame frame;
 	private boolean running = false;
+	
+	private GameMode gameMode;
+	
+	private MenuRenderEngine menuRenderer;
+	private GameRenderEngine gameRenderer;
 
 	private GameMode gameMode;
 	private MenuRenderEngine menuRenderer;
@@ -31,6 +40,7 @@ public class CaveQuest extends Canvas implements Runnable {
 		setPreferredSize(size);
 
 		frame = new JFrame();
+		gameMode = GameMode.MENU;
 	}
 
 	public synchronized void start() {
@@ -89,10 +99,27 @@ public class CaveQuest extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
+<<<<<<< HEAD
+		
+		switch (gameMode) {
+		case MENU:
+			menuRenderer.render();
+			break;
+		case INGAME:
+			gameRenderer.render();
+			break;
+		}
+		
+=======
 
+>>>>>>> branch 'master' of https://github.com/philip98/CaveQuest.git
 		g.dispose();
 		bs.show();
 
+	}
+	
+	public static CaveQuest getInstance() {
+		return instance;
 	}
 
 	public static void main(String[] args) {
