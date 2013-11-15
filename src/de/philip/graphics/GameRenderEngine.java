@@ -4,9 +4,12 @@ import java.awt.Graphics;
 
 public class GameRenderEngine extends RenderEngine {
 
-	public GameRenderEngine(Graphics g) {
-		super(g);
-		// TODO Auto-generated constructor stub
+	public GameRenderEngine() {
+		super();
+	}
+	
+	public void render(Graphics g) {
+		//TODO stub
 	}
 
 }

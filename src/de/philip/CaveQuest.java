@@ -37,6 +37,9 @@ public class CaveQuest extends Canvas implements Runnable {
 
 		frame = new JFrame();
 		gameMode = GameMode.MENU;
+		
+		menuRenderer = new MenuRenderEngine();
+		gameRenderer = new GameRenderEngine();
 	}
 
 	public synchronized void start() {
@@ -98,15 +101,12 @@ public class CaveQuest extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		
-		menuRenderer = new MenuRenderEngine(g);
-		gameRenderer = new GameRenderEngine(g);
 		switch (gameMode) {
 		case MENU:
-			menuRenderer.render();
+			menuRenderer.render(g);
 			break;
 		case INGAME:
-			gameRenderer.render();
+			gameRenderer.render(g);
 			break;
 		}
 		
