@@ -2,36 +2,32 @@ package de.philip.net.server;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashSet;
 
+import de.philip.entity.World;
 import de.philip.util.Logger;
 
 public class Server {
-
-	ServerSocket sock;
-	Socket cliSock;
-
+	
 	public static final int DEFAULT_PORT = 33576;
+	
+	public static ServerThreadListen threadListen;
+	public static ServerSocket serverSocket;
+	public static HashSet<Socket> connections = new HashSet<Socket>();
+	public static World world;
 
-	private int port;
+	public static int port = DEFAULT_PORT;
 
-	public Server(int port) {
-		this.port = port;
-		try {
-			sock = new ServerSocket(port);
-		} catch (Exception e) {
-			Logger.err(e.getMessage());
-		}
-	}
-
-	public void start() {
+	public static void start() {
+		Logger.log("Loading World .."); // world.txt
+		// TODO: Parse World from World.java
 		Logger.log("Starting Server on port " + port + " ...");
-		Logger.log("Listening on port " + port + "...");
-		cliSock = sock.accept();
-		
+		threadListen = new ServerThreadListen();
+		threadListen.start();
 	}
 
-	public int getPort() {
-		return port;
+	public static void setPort(int port) {
+		Server.port = port;
 	}
 
 }

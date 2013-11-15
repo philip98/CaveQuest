@@ -11,6 +11,7 @@ import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 // http://ben-bai.blogspot.de/2012/08/java-convert-image-to-base64-string-and.html
+
 public class Util {
 	
 	public static BufferedImage decodeToImage(String imageString) {
@@ -35,12 +36,12 @@ public class Util {
      * @param type jpeg, bmp, ...
      * @return encoded string
      */
-    public static String encodeToString(BufferedImage image, String type) {
+    public static String encodeToString(BufferedImage image) {
         String imageString = null;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
         try {
-            ImageIO.write(image, type, bos);
+            ImageIO.write(image, "png", bos);
             byte[] imageBytes = bos.toByteArray();
 
             BASE64Encoder encoder = new BASE64Encoder();

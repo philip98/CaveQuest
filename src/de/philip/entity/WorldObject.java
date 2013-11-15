@@ -5,7 +5,8 @@ import java.awt.image.BufferedImage;
 import de.philip.util.Util;
 
 public class WorldObject {
-
+	
+	private int id;
 	private int y;
 	private int x;
 	private int width;
@@ -13,8 +14,8 @@ public class WorldObject {
 	private boolean solid;
 	private BufferedImage image;
 	
-	public WorldObject(int y, int x, int width, int height, boolean solid, String base64) {
-		super();
+	public WorldObject(int id, int y, int x, int width, int height, boolean solid, String base64) {
+		this.setId(id);
 		this.y = y;
 		this.x = x;
 		this.width = width;
@@ -69,6 +70,14 @@ public class WorldObject {
 
 	public void setImage(BufferedImage image) {
 		this.image = image;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

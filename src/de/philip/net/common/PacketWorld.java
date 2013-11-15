@@ -1,31 +1,59 @@
 package de.philip.net.common;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.HashSet;
 
+import de.philip.CaveQuest;
 import de.philip.entity.World;
+import de.philip.entity.WorldObject;
+import de.philip.util.Logger;
+import de.philip.util.Util;
 
 public class PacketWorld extends Packet {
-	
+
 	/*
-	 * Packet Behavior:
-	 * Server sends width:Integer and height:Integer
-	 * Server sends Integer, which contains the lines that follow
-	 * Client reach that lines in format
-	 * [id:int] [x:int] [y:int] [width:int] [height:int] [solid:boolean] [image:Base64 String]
+	 * Packet Behavior: Server sends width:Integer and height:Integer Server
+	 * sends all World Objects with format [id:int] [x:int] [y:int] [width:int]
+	 * [height:int] [solid:boolean] [image:Base64 String]
 	 */
-	
+
 	public PacketWorld() {
 		super();
 	}
-	
-	public void process(DataInputStream data) throws IOException {
-		World world = new World();
-		int w = data.readInt();
-		int h = data.readInt();
-		
-		
-		
+
+	public void send(World world, DataOutputStream data) throws IOException {
+		data.writeInt(world.getWidth());
+		data.writeInt(world.getHeight());
+		for(WorldObject obj : world.getObjects()) {
+			data.writeInt(obj.getId());
+			data.writeInt(obj.getX());
+			data.writeInt(obj.getWidth());
+			data.writeInt(obj.getHeight());
+			data.writeBoolean(obj.isSolid());
+			data.writeUTF(Util.encodeToString(obj.getImage()));
+		}
 	}
-	
+
+	public void process(DataInputStream data) throws IOException {
+		Logger.log("Starting World Receive ..");
+		int worldWidth = data.readInt();
+		int worldHeight = data.readInt();
+		HashSet<WorldObject> objects = new HashSet<>();
+		while (data.available() > 0) {
+			int id = data.readInt();
+			int x = data.readInt();
+			int y = data.readInt();
+			int width = data.readInt();
+			int height = data.readInt();
+			boolean solid = data.readBoolean();
+			String base64 = data.readUTF();
+			objects.add(new WorldObject(id, x, y, width, height, solid, base64));
+		}
+		World world = new World(worldWidth, worldHeight, objects);
+		CaveQuest.getInstance().setWorld(world);
+		Logger.log("Received World! width=" + world.getWidth() + ", height=" + world.getHeight() + ", objects=" + objects.size());
+	}
+
 }
