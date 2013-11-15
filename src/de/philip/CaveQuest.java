@@ -86,7 +86,7 @@ public class CaveQuest extends Canvas implements Runnable {
 	}
 
 	/**
-	 * Renders the game according to the game mode
+	 * Renders the game according to the game mode.
 	 */
 	public void render() {
 		BufferStrategy bs = getBufferStrategy();
@@ -98,6 +98,9 @@ public class CaveQuest extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
+		
+		menuRenderer = new MenuRenderEngine(g);
+		gameRenderer = new GameRenderEngine(g);
 		switch (gameMode) {
 		case MENU:
 			menuRenderer.render();
@@ -109,7 +112,6 @@ public class CaveQuest extends Canvas implements Runnable {
 		
 		g.dispose();
 		bs.show();
-
 	}
 	
 	public static CaveQuest getInstance() {
@@ -145,8 +147,7 @@ public class CaveQuest extends Canvas implements Runnable {
 		instance.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		instance.frame.setLocationRelativeTo(null);
 		instance.frame.setVisible(true);
-
+		
 		instance.start();
 	}
-
 }
