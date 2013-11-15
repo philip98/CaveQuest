@@ -1,13 +1,14 @@
 package de.philip.net.server;
 
-import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 import de.philip.util.Logger;
 
 public class Server {
 
-	Socket sock;
+	ServerSocket sock;
+	Socket cliSock;
 
 	public static final int DEFAULT_PORT = 33576;
 
@@ -16,7 +17,7 @@ public class Server {
 	public Server(int port) {
 		this.port = port;
 		try {
-			sock = new Socket(InetAddress.getLocalHost(), port);
+			sock = new ServerSocket(port);
 		} catch (Exception e) {
 			Logger.err(e.getMessage());
 		}
@@ -24,6 +25,9 @@ public class Server {
 
 	public void start() {
 		Logger.log("Starting Server on port " + port + " ...");
+		Logger.log("Listening on port " + port + "...");
+		cliSock = sock.accept();
+		
 	}
 
 	public int getPort() {
