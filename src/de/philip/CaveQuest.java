@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 
 public class CaveQuest extends Canvas implements Runnable {
 
+	private MenuRenderEngine menuRenderer;
+	private GameRenderEngine gameRenderer;
 	private static final long serialVersionUID = 1L;
 
 	public static String title = "CaveQuest";
