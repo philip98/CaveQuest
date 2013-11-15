@@ -12,6 +12,7 @@ import de.philip.graphics.GameMode;
 import de.philip.graphics.GameRenderEngine;
 import de.philip.graphics.MenuRenderEngine;
 import de.philip.net.server.Server;
+import de.philip.util.Logger;
 
 public class CaveQuest extends Canvas implements Runnable {
 
@@ -40,6 +41,8 @@ public class CaveQuest extends Canvas implements Runnable {
 		
 		menuRenderer = new MenuRenderEngine();
 		gameRenderer = new GameRenderEngine();
+		
+		Logger.log("Initalized variables");
 	}
 
 	public synchronized void start() {
@@ -147,6 +150,8 @@ public class CaveQuest extends Canvas implements Runnable {
 		instance.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		instance.frame.setLocationRelativeTo(null);
 		instance.frame.setVisible(true);
+		
+		Logger.log("Created window");
 		
 		instance.start();
 	}

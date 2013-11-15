@@ -24,5 +24,4 @@ public class MenuRenderEngine extends RenderEngine {
 		g.setFont(new Font("Roman", Font.BOLD, 48));
 		g.drawString("Quit", w / 2 - 50, 7 * h / 10 + 10);
 	}
-
 }
