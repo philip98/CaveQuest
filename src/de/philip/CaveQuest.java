@@ -85,6 +85,9 @@ public class CaveQuest extends Canvas implements Runnable {
 
 	}
 
+	/**
+	 * Renders the game according to the game mode
+	 */
 	public void render() {
 		BufferStrategy bs = getBufferStrategy();
 		if (bs == null) {
