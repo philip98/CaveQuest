@@ -1,13 +1,14 @@
 package de.philip.net.common;
 
 import java.io.DataInputStream;
+import java.io.IOException;
 
 public abstract class Packet {
 	
 	public Packet() {
 	}
 	
-	public void process(DataInputStream data) {
+	public void process(DataInputStream data) throws IOException {
 		
 	}
 	
