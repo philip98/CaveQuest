@@ -14,7 +14,7 @@ import de.philip.graphics.GameMode;
 import de.philip.graphics.GameRenderEngine;
 import de.philip.graphics.MenuRenderEngine;
 import de.philip.input.InputListener;
-import de.philip.net.client.ThreadReceive;
+import de.philip.net.client.ClientThreadReceive;
 import de.philip.net.server.Server;
 import de.philip.util.Logger;
 
@@ -37,8 +37,8 @@ public class CaveQuest extends Canvas implements Runnable {
 	private MenuRenderEngine menuRenderer;
 	private GameRenderEngine gameRenderer;
 	private World world;
-	
-	private ThreadReceive threadReceive;
+
+	private ClientThreadReceive threadReceive;
 	private Socket serverConnected;
 
 	public CaveQuest() {
@@ -50,8 +50,8 @@ public class CaveQuest extends Canvas implements Runnable {
 		gameMode = GameMode.MENU;
 		menuRenderer = new MenuRenderEngine();
 		gameRenderer = new GameRenderEngine();
-		threadReceive = new ThreadReceive();
-		threadReceive.start();
+		threadReceive = new ClientThreadReceive();
+
 		Logger.log("Initalized variables");
 	}
 
@@ -132,14 +132,14 @@ public class CaveQuest extends Canvas implements Runnable {
 	}
 
 	public static void main(String[] args) {
-		
+
 		boolean flagServer = false;
 		int port = Server.DEFAULT_PORT;
 
 		for (int i = 0; i < args.length; i++) {
 			if (args[i].equalsIgnoreCase("--server")) {
 				flagServer = true;
-				if (i+1 > args.length) {
+				if (i + 1 > args.length) {
 					port = Integer.parseInt(args[i + 1]);
 				}
 			}
@@ -173,6 +173,7 @@ public class CaveQuest extends Canvas implements Runnable {
 		try {
 			serverConnected = new Socket(ip, Server.DEFAULT_PORT);
 			Logger.log("Connected!");
+			threadReceive.start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

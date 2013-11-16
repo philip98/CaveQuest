@@ -22,7 +22,7 @@ public class Server {
 	public static void start() {
 		Logger.log("Loading World .."); // world.txt
 		try {
-			world = World.load(new File("world.txt"));
+			world = World.load(new File("res/world.txt"));
 			Logger.log("Starting Server on port " + port + " ...");
 			serverSocket = new ServerSocket(port);
 		} catch (Exception e) {

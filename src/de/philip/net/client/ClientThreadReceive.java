@@ -7,12 +7,12 @@ import de.philip.CaveQuest;
 import de.philip.net.common.Packet;
 import de.philip.net.common.PacketWorld;
 
-public class ThreadReceive extends Thread {
+public class ClientThreadReceive extends Thread {
 
-	public ThreadReceive() {
-
+	public ClientThreadReceive() {
+		
 	}
-
+	
 	@Override
 	public void run() {
 		while (true) {
@@ -24,7 +24,7 @@ public class ThreadReceive extends Thread {
 					byte prefix = data.readByte();
 					Packet p = Packet.getPacket(prefix);
 					if (p instanceof PacketWorld) {
-						((PacketWorld) p).process(data);
+						((PacketWorld) p).receive(data);
 					}
 				}
 			} catch (IOException e) {

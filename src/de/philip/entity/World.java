@@ -42,8 +42,8 @@ public class World {
 				int width = Integer.valueOf(split[3]);
 				int height = Integer.valueOf(split[4]);
 				boolean solid = (split[5].equalsIgnoreCase("true") || split[5].equalsIgnoreCase("1")) ? true : false;
-				String base64 = split[6];
-				objects.add(new WorldObject(id, x, y, width, height, solid, base64));
+				Sprite sprite = SpriteSheet.sprites[Integer.valueOf(split[6])];
+				objects.add(new WorldObject(id, x, y, width, height, solid, sprite));
 			}
 		}
 		br.close();
