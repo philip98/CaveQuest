@@ -24,6 +24,8 @@ public class PacketWorld extends Packet {
 	}
 
 	public void send(World world, DataOutputStream data) throws IOException {
+		Logger.log("Starting World send ..");
+		data.flush();
 		data.writeInt(world.getWidth());
 		data.writeInt(world.getHeight());
 		for(WorldObject obj : world.getObjects()) {
@@ -34,12 +36,14 @@ public class PacketWorld extends Packet {
 			data.writeBoolean(obj.isSolid());
 			data.writeUTF(Util.encodeToString(obj.getImage()));
 		}
+		Logger.log("Sent world!");
 	}
 
 	public void process(DataInputStream data) throws IOException {
-		Logger.log("Starting World Receive ..");
+		Logger.log("Starting World Receive with " + data.available() + " Bytes Available..");
 		int worldWidth = data.readInt();
 		int worldHeight = data.readInt();
+		Logger.log("Received width=" + worldWidth + " height=" + worldHeight);
 		HashSet<WorldObject> objects = new HashSet<>();
 		while (data.available() > 0) {
 			int id = data.readInt();
@@ -50,6 +54,7 @@ public class PacketWorld extends Packet {
 			boolean solid = data.readBoolean();
 			String base64 = data.readUTF();
 			objects.add(new WorldObject(id, x, y, width, height, solid, base64));
+			System.out.println("Read Object! Data Left: " + data.available() + " Bytes");
 		}
 		World world = new World(worldWidth, worldHeight, objects);
 		CaveQuest.getInstance().setWorld(world);

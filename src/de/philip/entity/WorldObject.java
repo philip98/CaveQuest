@@ -7,17 +7,17 @@ import de.philip.util.Util;
 public class WorldObject {
 	
 	private int id;
-	private int y;
 	private int x;
+	private int y;
 	private int width;
 	private int height;
 	private boolean solid;
 	private BufferedImage image;
 	
-	public WorldObject(int id, int y, int x, int width, int height, boolean solid, String base64) {
+	public WorldObject(int id, int x, int y, int width, int height, boolean solid, String base64) {
 		this.setId(id);
-		this.y = y;
 		this.x = x;
+		this.y = y;
 		this.width = width;
 		this.height = height;
 		this.solid = solid;
