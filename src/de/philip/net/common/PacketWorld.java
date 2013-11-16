@@ -3,7 +3,7 @@ package de.philip.net.common;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.ArrayList;
 
 import de.philip.CaveQuest;
 import de.philip.entity.Sprite;
@@ -24,7 +24,8 @@ public class PacketWorld extends Packet {
 		data.writeInt(world.getWidth());
 		data.writeInt(world.getHeight());
 		data.writeInt(world.getObjects().size());
-		for (WorldObject obj : world.getObjects()) {
+		for (int i = 0; i < world.getObjects().size(); i++) {
+			WorldObject obj = world.getObjects().get(i);
 			data.writeInt(obj.getId());
 			data.writeInt(obj.getX());
 			data.writeInt(obj.getY());
@@ -34,7 +35,7 @@ public class PacketWorld extends Packet {
 			data.writeInt(obj.getSprite().getId());
 		}
 		for (int y = 0; y < world.getHeight(); y++) {
-			for (int x = 0; x < world.getHeight(); x++) {
+			for (int x = 0; x < world.getWidth(); x++) {
 				data.writeInt(x);
 				data.writeInt(y);
 				data.writeInt(world.getTiles()[x][y]);
@@ -45,12 +46,11 @@ public class PacketWorld extends Packet {
 	}
 
 	public void receive(DataInputStream data) throws IOException {
-		Logger.log("Starting World Receive with " + data.available() + " Bytes Available..");
+		Logger.log("Starting World Receive ..");
 		int worldWidth = data.readInt();
 		int worldHeight = data.readInt();
-		Logger.log("Received width=" + worldWidth + " height=" + worldHeight);
 		int numObjects = data.readInt();
-		HashSet<WorldObject> objects = new HashSet<>();
+		ArrayList<WorldObject> objects = new ArrayList<>();
 		for (int i = 0; i < numObjects; i++) {
 			int id = data.readInt();
 			int x = data.readInt();
@@ -60,20 +60,19 @@ public class PacketWorld extends Packet {
 			boolean solid = data.readBoolean();
 			Sprite sprite = SpriteSheet.sprites[data.readInt()];
 			objects.add(new WorldObject(id, x, y, width, height, solid, sprite));
-			Logger.log("Read Object! Data Left: " + data.available() + " Bytes");
 		}
-		Logger.log("Now Receiving Tiles!");
 		int[][] tiles = new int[worldWidth][worldHeight];
-		while (data.available() > 0) {
-			int x = data.readInt();
-			int y = data.readInt();
-			int col = data.readInt();
-			tiles[x][y] = col;
+		for (int _y = 0; _y < worldWidth; _y++) {
+			for (int _x = 0; _x < worldHeight; _x++) {
+				int x = data.readInt();
+				int y = data.readInt();
+				int col = data.readInt();
+				tiles[x][y] = col;
+			}
 		}
 		World world = new World(worldWidth, worldHeight, objects, tiles);
 		CaveQuest.getInstance().setWorld(world);
-		Logger.log("Received World! width=" + world.getWidth() + ", height=" + world.getHeight() + ", objects=" + objects.size() + " tiles="
-				+ tiles.length);
+		Logger.log("Received World! width=" + world.getWidth() + ", height=" + world.getHeight() + ", objects=" + objects.size());
 	}
 
 }

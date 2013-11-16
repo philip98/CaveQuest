@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.HashSet;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -15,9 +15,9 @@ public class World {
 	private int width;
 	private int height;
 	private int[][] tiles;
-	private HashSet<WorldObject> objects;
+	private ArrayList<WorldObject> objects;
 
-	public World(int width, int height, HashSet<WorldObject> objects, int[][] tiles) {
+	public World(int width, int height, ArrayList<WorldObject> objects, int[][] tiles) {
 		this.width = width;
 		this.height = height;
 		this.objects = objects;
@@ -27,7 +27,7 @@ public class World {
 	public static World load(File fTxt, File fPng) throws Exception {
 		Logger.log("Starting World Parsing file " + fTxt.getAbsolutePath());
 		BufferedReader br = new BufferedReader(new FileReader(fTxt));
-		HashSet<WorldObject> objects = new HashSet<>();
+		ArrayList<WorldObject> objects = new ArrayList<>();
 		String line;
 		while ((line = br.readLine()) != null) {
 			if (line.startsWith("object:")) {
@@ -72,11 +72,11 @@ public class World {
 		this.height = height;
 	}
 
-	public HashSet<WorldObject> getObjects() {
+	public ArrayList<WorldObject> getObjects() {
 		return objects;
 	}
 
-	public void setObjects(HashSet<WorldObject> objects) {
+	public void setObjects(ArrayList<WorldObject> objects) {
 		this.objects = objects;
 	}
 
