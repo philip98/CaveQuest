@@ -25,6 +25,7 @@ public class CaveQuest extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
 	public static String title = "CaveQuest";
+	public static double version = 0.1;
 	public static int width = 900;
 	public static int height = 600;
 
@@ -90,7 +91,7 @@ public class CaveQuest extends Canvas implements Runnable {
 			frames++;
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				frame.setTitle(title + " | " + updates + " ups, " + frames + " fps");
+				frame.setTitle(title + " v" + version + " | " + updates + " ups, " + frames + " fps");
 				updates = 0;
 				frames = 0;
 			}

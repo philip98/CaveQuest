@@ -23,7 +23,7 @@ public class PacketWorld extends Packet {
 		data.writeByte(0x01);
 		data.writeInt(world.getWidth());
 		data.writeInt(world.getHeight());
-		for(WorldObject obj : world.getObjects()) {
+		for (WorldObject obj : world.getObjects()) {
 			data.writeInt(obj.getId());
 			data.writeInt(obj.getX());
 			data.writeInt(obj.getY());
@@ -51,7 +51,7 @@ public class PacketWorld extends Packet {
 			boolean solid = data.readBoolean();
 			Sprite sprite = SpriteSheet.sprites[data.readInt()];
 			objects.add(new WorldObject(id, x, y, width, height, solid, sprite));
-			System.out.println("Read Object! Data Left: " + data.available() + " Bytes");
+			Logger.log("Read Object! Data Left: " + data.available() + " Bytes");
 		}
 		World world = new World(worldWidth, worldHeight, objects);
 		CaveQuest.getInstance().setWorld(world);

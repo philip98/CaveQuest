@@ -4,14 +4,14 @@ import java.util.Calendar;
 
 public class Logger {
 
-	public static void log(String s) {
+	public static void log(Object o) {
 		String mydate = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
-		System.out.println("[" + mydate + "] : " + s);
+		System.out.println("[" + mydate + "] : " + o.toString());
 	}
 
-	public static void err(String s) {
+	public static void err(Object o) {
 		String mydate = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
-		System.err.println("[" + mydate + "] : " + s);
+		System.err.println("[" + mydate + "] : " + o.toString());
 	}
 
 }
