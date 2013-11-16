@@ -21,7 +21,11 @@ public class SpriteSheet {
 		}
 	}
 	public static final Sprite[] sprites = new Sprite[] { new Sprite(0, 0xAB5F34, sheet.getSubimage(0, 0, 40, 40)), // Dirt
-			new Sprite(1, 0x009E00, sheet.getSubimage(40, 0, 40, 40)) // Grass
+			new Sprite(1, 0x009E00, sheet.getSubimage(40, 0, 40, 40)), //Grass
+			new Sprite(2, 0x42, sheet.getSubimage(0, 40, 40, 40)), //Player North
+			new Sprite(3, 0x43, sheet.getSubimage(40, 40, 40, 40)), //Player East
+			new Sprite(4, 0x44, sheet.getSubimage(80, 40, 40, 40)), //Player South
+			new Sprite(5, 0x45, sheet.getSubimage(80, 0, 40, 40)) //Player West
 	};
 
 	public static Sprite getSprite(int col) {
