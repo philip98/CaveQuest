@@ -10,6 +10,7 @@ import de.philip.entity.Sprite;
 import de.philip.entity.SpriteSheet;
 import de.philip.entity.World;
 import de.philip.entity.WorldObject;
+import de.philip.graphics.GameMode;
 import de.philip.util.Logger;
 
 public class PacketWorld extends Packet {
@@ -75,6 +76,7 @@ public class PacketWorld extends Packet {
 		Logger.log("Received World! width=" + world.getWidth() + ", height=" + world.getHeight() + ", objects=" + objects.size());
 		PacketName packet = new PacketName();
 		packet.send(new DataOutputStream(CaveQuest.getInstance().getServerConnected().getOutputStream()), CaveQuest.getInstance().getName());
+		CaveQuest.getInstance().setGameMode(GameMode.INGAME);
 	}
-
+	
 }

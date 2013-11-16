@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 
 import de.philip.entity.World;
 import de.philip.graphics.GameMode;
-import de.philip.graphics.GameRenderEngine;
+import de.philip.graphics.IngameRenderEngine;
 import de.philip.graphics.MenuRenderEngine;
 import de.philip.input.InputListener;
 import de.philip.net.client.ClientThreadReceive;
@@ -32,11 +32,11 @@ public class CaveQuest extends Canvas implements Runnable {
 	private Thread thread;
 	private JFrame frame;
 	private boolean running = false;
-
+	
 	private InputListener inputListener;
 	private GameMode gameMode;
 	private MenuRenderEngine menuRenderer;
-	private GameRenderEngine gameRenderer;
+	private IngameRenderEngine gameRenderer;
 	private World world;
 
 	private ClientThreadReceive threadReceive;
@@ -51,7 +51,7 @@ public class CaveQuest extends Canvas implements Runnable {
 		inputListener = new InputListener();
 		gameMode = GameMode.MENU;
 		menuRenderer = new MenuRenderEngine();
-		gameRenderer = new GameRenderEngine();
+		gameRenderer = new IngameRenderEngine();
 		threadReceive = new ClientThreadReceive();
 	}
 
@@ -208,11 +208,11 @@ public class CaveQuest extends Canvas implements Runnable {
 		this.menuRenderer = menuRenderer;
 	}
 
-	public GameRenderEngine getGameRenderer() {
+	public IngameRenderEngine getGameRenderer() {
 		return gameRenderer;
 	}
 
-	public void setGameRenderer(GameRenderEngine gameRenderer) {
+	public void setGameRenderer(IngameRenderEngine gameRenderer) {
 		this.gameRenderer = gameRenderer;
 	}
 

@@ -15,13 +15,15 @@ public class World {
 	private int width;
 	private int height;
 	private int[][] tiles;
+	private Sprite[][] sprites;
 	private ArrayList<WorldObject> objects;
-
+	
 	public World(int width, int height, ArrayList<WorldObject> objects, int[][] tiles) {
 		this.width = width;
 		this.height = height;
 		this.objects = objects;
 		this.tiles = tiles;
+		this.sprites = SpriteSheet.convertTiles(tiles);
 	}
 
 	public static World load(File fTxt, File fPng) throws Exception {
@@ -86,6 +88,14 @@ public class World {
 
 	public void setTiles(int[][] tiles) {
 		this.tiles = tiles;
+	}
+
+	public Sprite[][] getSprites() {
+		return sprites;
+	}
+
+	public void setSprites(Sprite[][] sprites) {
+		this.sprites = sprites;
 	}
 
 }
