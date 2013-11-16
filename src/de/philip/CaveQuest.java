@@ -52,8 +52,6 @@ public class CaveQuest extends Canvas implements Runnable {
 		menuRenderer = new MenuRenderEngine();
 		gameRenderer = new GameRenderEngine();
 		threadReceive = new ClientThreadReceive();
-
-		Logger.log("Initalized variables");
 	}
 
 	public synchronized void start() {
@@ -61,7 +59,7 @@ public class CaveQuest extends Canvas implements Runnable {
 		thread = new Thread(this, "CaveQuest");
 		thread.start();
 	}
-
+	
 	public synchronized void stop() {
 		running = false;
 		try {
@@ -133,7 +131,9 @@ public class CaveQuest extends Canvas implements Runnable {
 	}
 
 	public static void main(String[] args) {
-
+		
+		Logger.log("Starting ..");
+		
 		boolean flagServer = false;
 		int port = Server.DEFAULT_PORT;
 
@@ -164,7 +164,7 @@ public class CaveQuest extends Canvas implements Runnable {
 		instance.addKeyListener(instance.inputListener);
 		instance.addMouseListener(instance.inputListener);
 
-		Logger.log("Created window");
+		Logger.log("Started!");
 
 		instance.start();
 	}

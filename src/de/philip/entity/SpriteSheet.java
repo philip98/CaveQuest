@@ -19,8 +19,8 @@ public class SpriteSheet {
 		}
 	}
 	public static final Sprite[] sprites = new Sprite[] {
-		new Sprite(0, sheet.getSubimage(0, 0, 40, 40)), // Dirt
-		new Sprite(1, sheet.getSubimage(40, 40, 40, 40)) // Grass
+		new Sprite(0, 0xAB5F34, sheet.getSubimage(0, 0, 40, 40)), // Dirt
+		new Sprite(1, 0x009E00, sheet.getSubimage(40, 0, 40, 40)) // Grass
 	};
 
 }

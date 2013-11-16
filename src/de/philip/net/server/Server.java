@@ -20,9 +20,9 @@ public class Server {
 	public static int port = DEFAULT_PORT;
 
 	public static void start() {
-		Logger.log("Loading World .."); // world.txt
+		Logger.log("Loading World .."); // world.txt and world.png
 		try {
-			world = World.load(new File("res/world.txt"));
+			world = World.load(new File("res/world.txt"), new File("res/world.png"));
 			Logger.log("Starting Server on port " + port + " ...");
 			serverSocket = new ServerSocket(port);
 		} catch (Exception e) {

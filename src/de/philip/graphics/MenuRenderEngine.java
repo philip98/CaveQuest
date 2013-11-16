@@ -2,7 +2,9 @@ package de.philip.graphics;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
 import de.philip.CaveQuest;
@@ -22,11 +24,18 @@ public class MenuRenderEngine extends RenderEngine {
 	public void render(Graphics g) {
 		int w = CaveQuest.getInstance().getWidth();
 		int h = CaveQuest.getInstance().getHeight();
+		GradientPaint gp = new GradientPaint(w/2, 0, new Color(0x8B5A2B), w/2, h, new Color(0x404040));
+		((Graphics2D)g).setPaint(gp);
+		((Graphics2D)g).fillRect(0, 0, w, h);
 		if (screen == 0) {
 			g.setColor(Color.WHITE);
 			g.setFont(new Font("Serif", Font.BOLD, 128));
 			g.drawString("CaveQuest", 50, 120);
+			g.setColor(Color.GRAY);
+			g.setFont(new Font("Serif", Font.BOLD, 28));
+			g.drawString("No, there are no Caves!", 60,150);
 			g.setFont(new Font("Serif", Font.BOLD, 36));
+			g.setColor(Color.WHITE);
 			g.drawString(selection == 0 ? "> START" : "  START", w - 200, h - 250);
 			g.drawString(selection == 1 ? "> HELP" : "  HELP", w - 200, h - 200);
 			g.drawString(selection == 2 ? "> ABOUT" : "  ABOUT", w - 200, h - 150);

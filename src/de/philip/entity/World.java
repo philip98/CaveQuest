@@ -1,9 +1,12 @@
 package de.philip.entity;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.HashSet;
+
+import javax.imageio.ImageIO;
 
 import de.philip.util.Logger;
 
@@ -11,30 +14,23 @@ public class World {
 
 	private int width;
 	private int height;
+	private int[][] tiles;
 	private HashSet<WorldObject> objects;
 
-	public World(int width, int height, HashSet<WorldObject> objects) {
+	public World(int width, int height, HashSet<WorldObject> objects, int[][] tiles) {
 		this.width = width;
 		this.height = height;
 		this.objects = objects;
+		this.tiles = tiles;
 	}
 
-	public static World load(File f) throws Exception {
-		Logger.log("Starting World Parsing file " + f.getAbsolutePath());
-		BufferedReader br = new BufferedReader(new FileReader(f));
-		int worldWidth = 0;
-		int worldHeight = 0;
+	public static World load(File fTxt, File fPng) throws Exception {
+		Logger.log("Starting World Parsing file " + fTxt.getAbsolutePath());
+		BufferedReader br = new BufferedReader(new FileReader(fTxt));
 		HashSet<WorldObject> objects = new HashSet<>();
 		String line;
 		while ((line = br.readLine()) != null) {
-			Logger.log("Parsing Line: " + line);
-			if (line.startsWith("width:")) {
-				int value = Integer.parseInt(line.replaceFirst("width:", ""));
-				worldWidth = value;
-			} else if (line.startsWith("height:")) {
-				int value = Integer.parseInt(line.replaceFirst("height:", ""));
-				worldHeight = value;
-			} else if (line.startsWith("object:")) {
+			if (line.startsWith("object:")) {
 				String[] split = line.replaceFirst("object:", "").split(" ");
 				int id = Integer.valueOf(split[0]);
 				int x = Integer.valueOf(split[1]);
@@ -46,8 +42,18 @@ public class World {
 				objects.add(new WorldObject(id, x, y, width, height, solid, sprite));
 			}
 		}
+		Logger.log("Starting World Parsing file " + fPng.getAbsolutePath());
+		BufferedImage worldImage = ImageIO.read(fPng);
+		int[][] tiles = new int[worldImage.getWidth()][worldImage.getHeight()];
+		for (int y = 0; y < worldImage.getHeight(); y++) {
+			for (int x = 0; x < worldImage.getHeight(); x++) {
+				int col = worldImage.getRGB(x, y);
+				tiles[x][y] = col;
+			}
+		}
 		br.close();
-		return new World(worldWidth, worldHeight, objects);
+		Logger.log("Finished Parsing! World width=" +worldImage.getWidth() + " height=" + worldImage.getHeight() + " objects=" + objects.size() + " tiles=" + tiles.length);
+		return new World(worldImage.getWidth(), worldImage.getHeight(), objects, tiles);
 	}
 
 	public int getWidth() {
@@ -72,6 +78,14 @@ public class World {
 
 	public void setObjects(HashSet<WorldObject> objects) {
 		this.objects = objects;
+	}
+
+	public int[][] getTiles() {
+		return tiles;
+	}
+
+	public void setTiles(int[][] tiles) {
+		this.tiles = tiles;
 	}
 
 }
