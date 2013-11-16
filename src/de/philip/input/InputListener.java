@@ -33,6 +33,7 @@ public class InputListener implements KeyListener, MouseListener {
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
+		keysDown.add(e.getKeyCode());
 		if(CaveQuest.getInstance().getGameMode() == GameMode.MENU) {
 			CaveQuest.getInstance().getMenuRenderer().keyPressed(e);
 		}

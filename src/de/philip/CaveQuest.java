@@ -9,6 +9,7 @@ import java.net.Socket;
 
 import javax.swing.JFrame;
 
+import de.philip.entity.Player;
 import de.philip.entity.World;
 import de.philip.graphics.GameMode;
 import de.philip.graphics.IngameRenderEngine;
@@ -38,7 +39,7 @@ public class CaveQuest extends Canvas implements Runnable {
 	private MenuRenderEngine menuRenderer;
 	private IngameRenderEngine gameRenderer;
 	private World world;
-
+	private Player player;
 	private ClientThreadReceive threadReceive;
 	private Socket serverConnected;
 	private String name;
@@ -53,6 +54,7 @@ public class CaveQuest extends Canvas implements Runnable {
 		menuRenderer = new MenuRenderEngine();
 		gameRenderer = new IngameRenderEngine();
 		threadReceive = new ClientThreadReceive();
+		setPlayer(new Player(50,50));
 	}
 
 	public synchronized void start() {
@@ -98,7 +100,7 @@ public class CaveQuest extends Canvas implements Runnable {
 	}
 
 	public void update() {
-
+		player.update();
 	}
 
 	/**
@@ -254,5 +256,13 @@ public class CaveQuest extends Canvas implements Runnable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 }

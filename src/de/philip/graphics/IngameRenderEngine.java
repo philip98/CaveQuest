@@ -18,7 +18,7 @@ public class IngameRenderEngine extends RenderEngine {
 		for(int y = 0; y < w.getHeight(); y++) {
 			for(int x = 0; x < w.getWidth(); x++) {
 				Sprite s = w.getSprites()[x][y];
-				g.drawImage(s.getImage(), 40*x, 40*y, null);
+				g.drawImage(s.getImage(), 40*x - CaveQuest.getInstance().getPlayer().getX(), 40*y - CaveQuest.getInstance().getPlayer().getY(), null);
 			}
 		}
 		
