@@ -6,6 +6,7 @@ import java.net.Socket;
 
 import de.philip.net.common.PacketWorld;
 import de.philip.util.Logger;
+import de.philip.util.UniqueIdentifier;
 
 public class ServerThreadListen extends Thread {
 
@@ -19,8 +20,9 @@ public class ServerThreadListen extends Thread {
 			try {
 				Logger.log("Waiting for Connection ..");
 				Socket socket = Server.serverSocket.accept();
-				Server.connections.add(socket);
-				Logger.log("Got Connection! Now sending World!");
+				int uid = UniqueIdentifier.getIdentifier();
+				Server.connections.put(uid, new ServerClient(socket, "STD-NAME"));
+				Logger.log("Got Connection (uid=" + uid + ")! Now sending World!");
 				
 				try {
 					sleep(100);

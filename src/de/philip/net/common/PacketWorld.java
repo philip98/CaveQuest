@@ -73,6 +73,8 @@ public class PacketWorld extends Packet {
 		World world = new World(worldWidth, worldHeight, objects, tiles);
 		CaveQuest.getInstance().setWorld(world);
 		Logger.log("Received World! width=" + world.getWidth() + ", height=" + world.getHeight() + ", objects=" + objects.size());
+		PacketName packet = new PacketName();
+		packet.send(new DataOutputStream(CaveQuest.getInstance().getServerConnected().getOutputStream()), CaveQuest.getInstance().getName());
 	}
 
 }

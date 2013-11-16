@@ -16,6 +16,7 @@ public class MenuRenderEngine extends RenderEngine {
 	int maxSelection = 3;
 	int screen = 0;
 	String ip = "";
+	String name = "";
 
 	public MenuRenderEngine() {
 		super();
@@ -53,13 +54,19 @@ public class MenuRenderEngine extends RenderEngine {
 			g.setFont(new Font("Serif", Font.BOLD, 128));
 			g.drawString("CaveQuest", 50, 120);
 			g.setFont(new Font("Serif", Font.BOLD, 36));
+			g.drawString("Enter Name: " + name, w - 500, h - 100);
+		} else if (screen == 4) {
+			g.setColor(Color.WHITE);
+			g.setFont(new Font("Serif", Font.BOLD, 128));
+			g.drawString("CaveQuest", 50, 120);
+			g.setFont(new Font("Serif", Font.BOLD, 36));
 			g.drawString("Enter IP: " + ip, w - 500, h - 100);
 		}
 	}
 
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-
+		
 		if (key == KeyEvent.VK_ENTER) {
 			if (screen == 0) {
 				maxSelection = 3;
@@ -75,7 +82,9 @@ public class MenuRenderEngine extends RenderEngine {
 					CaveQuest.getInstance().stop();
 				}
 			} else if (screen == 3) {
-				CaveQuest.getInstance().connect(ip);
+				screen = 4;
+			} else if (screen == 4) {
+				CaveQuest.getInstance().connect(ip, name);
 			}
 		}
 		if (key == KeyEvent.VK_ESCAPE) {
@@ -87,6 +96,15 @@ public class MenuRenderEngine extends RenderEngine {
 			}
 		}
 		if (screen == 3) {
+			name = name.replaceAll("\n", "").trim();
+			if (key == KeyEvent.VK_BACK_SPACE) {
+				if (name.length() > 0) {
+					name = name.substring(0, name.length() - 1);
+				}
+			} else
+				name += e.getKeyChar();
+		}
+		if (screen == 4) {
 			ip = ip.replaceAll("\n", "").trim();
 			if (key == KeyEvent.VK_BACK_SPACE) {
 				if (ip.length() > 0) {

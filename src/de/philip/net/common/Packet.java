@@ -23,6 +23,8 @@ public abstract class Packet {
 				return null;
 			case 0x01:
 				return new PacketWorld();
+			case 0x02:
+				return new PacketName();
 			// Add more here
 		}
 		return null;

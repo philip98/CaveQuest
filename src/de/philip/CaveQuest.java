@@ -41,6 +41,7 @@ public class CaveQuest extends Canvas implements Runnable {
 
 	private ClientThreadReceive threadReceive;
 	private Socket serverConnected;
+	private String name;
 
 	public CaveQuest() {
 		Dimension size = new Dimension(width, height);
@@ -59,7 +60,7 @@ public class CaveQuest extends Canvas implements Runnable {
 		thread = new Thread(this, "CaveQuest");
 		thread.start();
 	}
-	
+
 	public synchronized void stop() {
 		running = false;
 		try {
@@ -131,9 +132,9 @@ public class CaveQuest extends Canvas implements Runnable {
 	}
 
 	public static void main(String[] args) {
-		
+
 		Logger.log("Starting ..");
-		
+
 		boolean flagServer = false;
 		int port = Server.DEFAULT_PORT;
 
@@ -169,11 +170,14 @@ public class CaveQuest extends Canvas implements Runnable {
 		instance.start();
 	}
 
-	public void connect(String ip) {
-		Logger.log("Connecting to " + ip);
+	public void connect(String ip, String name) {
+		Logger.log("Connecting to " + ip + " as " + name);
+		this.name = name;
 		try {
 			serverConnected = new Socket(ip, Server.DEFAULT_PORT);
+			
 			Logger.log("Connected!");
+
 			threadReceive.start();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -242,5 +246,13 @@ public class CaveQuest extends Canvas implements Runnable {
 
 	public void setRunning(boolean running) {
 		this.running = running;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }
