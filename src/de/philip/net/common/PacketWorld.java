@@ -19,7 +19,7 @@ public class PacketWorld extends Packet {
 		super();
 	}
 
-	public void send(World world, DataOutputStream data) throws IOException {
+	public void send(World world, int playerID, DataOutputStream data) throws IOException {
 		Logger.log("Starting World send ..");
 		data.writeByte(0x01);
 		data.writeInt(world.getWidth());
@@ -42,6 +42,8 @@ public class PacketWorld extends Packet {
 				data.writeInt(world.getTiles()[x][y]);
 			}
 		}
+		data.writeInt(playerID);
+		
 		data.flush();
 		Logger.log("Sent world! data size=" + data.size() + " Bytes");
 	}
@@ -71,11 +73,19 @@ public class PacketWorld extends Packet {
 				tiles[x][y] = col;
 			}
 		}
+		int id = data.readInt();
+		CaveQuest.getInstance().setPlayerID(id);
+		
 		World world = new World(worldWidth, worldHeight, objects, tiles);
 		CaveQuest.getInstance().setWorld(world);
 		Logger.log("Received World! width=" + world.getWidth() + ", height=" + world.getHeight() + ", objects=" + objects.size());
 		PacketName packet = new PacketName();
-		packet.send(new DataOutputStream(CaveQuest.getInstance().getServerConnected().getOutputStream()), CaveQuest.getInstance().getName());
+		packet.send(new DataOutputStream(CaveQuest.getInstance().getServerConnected().getOutputStream()), CaveQuest.getInstance().getName(), id);
+		try{
+		Thread.sleep(1000);
+		} catch (Exception e) {
+			Logger.err(e.getMessage());
+		}
 		CaveQuest.getInstance().setGameMode(GameMode.INGAME);
 	}
 	

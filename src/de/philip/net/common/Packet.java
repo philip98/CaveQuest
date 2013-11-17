@@ -25,6 +25,10 @@ public abstract class Packet {
 				return new PacketWorld();
 			case 0x02:
 				return new PacketName();
+			case 0x03:
+				return new PacketPlayer();
+			case 0x04:
+				return new PacketPlayerUpdate();
 			// Add more here
 		}
 		return null;

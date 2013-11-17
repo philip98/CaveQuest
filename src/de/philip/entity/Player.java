@@ -54,4 +54,8 @@ public class Player {
 	public int getDir() {
 		return dir;
 	}
+	
+	public void setDir(int dir) {
+		this.dir = dir;
+	}
 }

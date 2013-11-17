@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import de.philip.CaveQuest;
 import de.philip.net.common.Packet;
+import de.philip.net.common.PacketPlayer;
 import de.philip.net.common.PacketWorld;
 
 public class ClientThreadReceive extends Thread {
@@ -25,6 +26,9 @@ public class ClientThreadReceive extends Thread {
 					Packet p = Packet.getPacket(prefix);
 					if (p instanceof PacketWorld) {
 						((PacketWorld) p).receive(data);
+						CaveQuest.getInstance().threadSend.start();
+					} else if (p instanceof PacketPlayer) {
+						((PacketPlayer) p).receive(data);
 					}
 				}
 			} catch (IOException e) {

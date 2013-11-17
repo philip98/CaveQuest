@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import de.philip.net.common.Packet;
 import de.philip.net.common.PacketName;
+import de.philip.net.common.PacketPlayerUpdate;
 import de.philip.util.Logger;
 
 public class ServerThreadReceive extends Thread {
@@ -26,6 +27,9 @@ public class ServerThreadReceive extends Thread {
 						Logger.log("Received Packet prefix=" + prefix);
 						if (p instanceof PacketName) {
 							((PacketName) p).receive(data, uid);
+						}
+						if (p instanceof PacketPlayerUpdate) {
+							((PacketPlayerUpdate) p).receive(data);
 						}
 					}
 				} catch (IOException e) {

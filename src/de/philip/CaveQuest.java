@@ -9,13 +9,14 @@ import java.net.Socket;
 
 import javax.swing.JFrame;
 
-import de.philip.entity.Player;
+import de.philip.entity.PlayerList;
 import de.philip.entity.World;
 import de.philip.graphics.GameMode;
 import de.philip.graphics.IngameRenderEngine;
 import de.philip.graphics.MenuRenderEngine;
 import de.philip.input.InputListener;
 import de.philip.net.client.ClientThreadReceive;
+import de.philip.net.client.ClientThreadSend;
 import de.philip.net.server.Server;
 import de.philip.util.Logger;
 
@@ -39,8 +40,10 @@ public class CaveQuest extends Canvas implements Runnable {
 	private MenuRenderEngine menuRenderer;
 	private IngameRenderEngine gameRenderer;
 	private World world;
-	private Player player;
+	public PlayerList pl;
+	private int playerID;
 	private ClientThreadReceive threadReceive;
+	public ClientThreadSend threadSend;
 	private Socket serverConnected;
 	private String name;
 
@@ -54,7 +57,7 @@ public class CaveQuest extends Canvas implements Runnable {
 		menuRenderer = new MenuRenderEngine();
 		gameRenderer = new IngameRenderEngine();
 		threadReceive = new ClientThreadReceive();
-		setPlayer(new Player(50,50));
+		threadSend = new ClientThreadSend();
 	}
 
 	public synchronized void start() {
@@ -100,7 +103,8 @@ public class CaveQuest extends Canvas implements Runnable {
 	}
 
 	public void update() {
-		player.update();
+		if (gameMode == GameMode.INGAME && pl != null)
+			pl.get(playerID).update();
 	}
 
 	/**
@@ -257,12 +261,12 @@ public class CaveQuest extends Canvas implements Runnable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public Player getPlayer() {
-		return player;
+	
+	public int getPlayerID() {
+		return this.playerID;
 	}
-
-	public void setPlayer(Player player) {
-		this.player = player;
+	
+	public void setPlayerID(int id) {
+		this.playerID = id;
 	}
 }
