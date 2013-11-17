@@ -24,21 +24,6 @@ public class World {
 		this.objects = objects;
 		this.tiles = tiles;
 		this.sprites = SpriteSheet.convertTiles(tiles);
-		
-		BufferedImage img;
-		int col;
-		for (int i = 2; i < 6; ++i) {
-			img = SpriteSheet.sprites[i].getImage();
-			for (int x = 0; x < 40; ++x) {
-				for (int y = 0; y < 40; ++y) {
-					col = img.getRGB(x, y);
-					if ((col & 0xFF00FF) == 0xFF00FF) 
-						col = 0x00000000;
-					img.setRGB(x, y, col);
-				}
-			}
-			SpriteSheet.sprites[i].setImage(img);
-		}
 	}
 
 	public static World load(File fTxt, File fPng) throws Exception {
