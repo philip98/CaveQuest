@@ -29,7 +29,6 @@ public class SpriteSheet {
 	};
 
 	public static Sprite getSprite(int col) {
-		// col = col ^ 0xFF000000;
 		for (int i = 0; i < sprites.length; i++) {
 			if (sprites[i].getColor() == col) {
 				return sprites[i];
